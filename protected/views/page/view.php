@@ -46,7 +46,7 @@ Yii::app()->clientScript->registerScriptFile('http://web/js/viewcom.js');
                     }
                     ?>
                     /
-                    <?echo CHtml::link(CHtml::openTag('i',array('class'=>'fa fa-calendar')).'&nbsp;'.'&nbsp;'.date('j F Y',$model->created).'</i>',array('page/PageCriteria','data'=>date('Y-m-j',$model->created)));?>
+                    <?echo CHtml::link(CHtml::openTag('i',array('class'=>'fa fa-calendar')).'&nbsp;'.'&nbsp;'.date('j F Y',$model->created).'</i>',array('page/index','data'=>date('Y-m-j',$model->created),'id'=>$data->category->id));?>
                     /
                     <?echo CHtml::link(CHtml::openTag('i',array('class'=>'fa fa-comment')).'&nbsp;'.CmsComment::model()->countByAttributes(array('page_id'=>$model->id)).'&nbsp;'."Комментариев".'</i>',array('page/view','id'=>$model->id));?>
                 </span>

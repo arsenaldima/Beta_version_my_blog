@@ -25,12 +25,7 @@ Yii::app()->clientScript->registerCssFile('http://web/css/page.css');
         <div class="col-md-4">
                <?
                     echo CHtml::link(CmsSetting::carimage($model->picture,128,128,'img-thumbnail',0,$id),array('/UserPersonal/avatar'),array('class'=>'linkFile','enctype'=>'multipart/form-data'));
-                 /*   echo CHtml::form('','POST',array('class'=>'avatar'));
-                    $model3=new CmsUser();
-                    $model3->scenario='ava';
-                    echo CHtml::fileField('image',$model3->image,array('id'=>'FiledFile'));
-                    echo CHtml::submitButton('',array('id'=>'subAvatar'));
-                    echo CHtml::endForm();*/
+
                ?>
         </div>
 
@@ -87,7 +82,7 @@ Yii::app()->clientScript->registerCssFile('http://web/css/page.css');
                 <tr>
                     <?
                         $criteria=new CDbCriteria();
-                        $criteria->condition='user_id=:id';
+                        $criteria->condition='user_id=:id AND status=2';
                         $criteria->params=array(':id'=>$id);
                         $criteria->order='created DESC';
                         $criteria->limit='1';
@@ -119,13 +114,7 @@ Yii::app()->clientScript->registerCssFile('http://web/css/page.css');
 <div class="row">
     <div class="container-fluid ">
         <div class="col-md-6 btn-group-vertical">
-            <br>
-            <?php
-            if($id==Yii::app()->user->id)
-            {
-                ($model->podpis==1)?$dim="Отписаться от рассылки":$dim="Подписаться на рассылку";
-                echo CHtml::button($dim,array('id'=>'but','class'=>'btn btn-info btn-large btn-group-vertical'));}
-            ?>
+
             <br>
 
             <button  id='metka' class="btn btn-info btn-large btn-group-vertical" >Отправить сообщение пользователю</button>
@@ -141,6 +130,13 @@ Yii::app()->clientScript->registerCssFile('http://web/css/page.css');
             </div>
             <?echo CHtml::submitButton('Отправить',array('class'=>'btn btn-primary btn-large', 'id'=>'sub_but'));?>
             <?echo CHtml::endForm();?>
+            <br>
+            <?php
+            if($id==Yii::app()->user->id)
+            {
+                ($model->podpis==1)?$dim="Отписаться от рассылки":$dim="Подписаться на рассылку";
+                echo CHtml::button($dim,array('id'=>'but','class'=>'btn btn-info btn-large btn-group-vertical'));}
+            ?>
         </div>
 
         <div class="col-md-6">
@@ -215,12 +211,24 @@ Yii::app()->clientScript->registerCssFile('http://web/css/page.css');
     <a  id='PageClose' style="cursor: pointer; display: none">Скрыть страницы пользователя</a>
 
     <div id="MyPage">
-    <?php $this->widget('zii.widgets.CListView', array(
+    <?
+    if(Yii::app()->user->id==$id)
+    {
+        $a=array('created','status');
+
+    }
+    else
+    {
+        $a=array('created');
+
+    }
+
+     $this->widget('zii.widgets.CListView', array(
         'dataProvider'=>CmsPage::MyPages($id),
         'itemView'=>'_view_pages',
         'emptyText'=>'В данной категории нет статей',
         'sorterHeader'=>'Сортировать по :',
-        'sortableAttributes'=>array('created','status'),
+        'sortableAttributes'=>$a,
 
     )); ?>
     </div>

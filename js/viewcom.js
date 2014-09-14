@@ -11,15 +11,21 @@ $(document).ready(function(){
 
             $('#NewComFormId').show(1000);
          });
+
     $('#newCom').click(function(){
         var reg_mail = /^[\.a-z0-9_-]{3,20}@[\.a-z0-9_-]{1,20}\.[a-z]{2,4}$/i;
+        var g = $('#GuestOrUser').val();
 
-        if (!reg_mail.test($('#guest').val()))
-        {
-            $('#guest').val(null);
-            alert('Проверьте правильность данных!');
-            return false;
-        }
+        if(g)
+
+            if (!reg_mail.test($('#guest').val()))
+            {
+                $('#guest').val(null);
+                alert('Проверьте правильность данных!');
+                return false;
+            }
+            else
+                return true;
         else
             return true;
 
