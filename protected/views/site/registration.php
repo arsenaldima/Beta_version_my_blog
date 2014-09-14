@@ -31,12 +31,12 @@
         </div>
         <div class="form-group">
             <label for="textPas">Введите пароль</label>
-            <?php echo $form->textField($model,'password',array('id'=>'textPas','placeholder'=>'Введите пароль','class'=>'form-control','type'=>'password'));?>
+            <?php echo $form->passwordField($model,'password',array('id'=>'textPas','placeholder'=>'Введите пароль','class'=>'form-control','type'=>'password'));?>
         </div>
 
         <div class="form-group">
             <label for="textPasRep">Повторите пароль</label>
-            <?php echo $form->textField($model,'repeat_password',array('id'=>'textPasRep','placeholder'=>'Повторите пароль','class'=>'form-control','type'=>'password'));?>
+            <?php echo $form->passwordField($model,'repeat_password',array('id'=>'textPasRep','placeholder'=>'Повторите пароль','class'=>'form-control','type'=>'password'));?>
         </div>
     </div>
 </div>
