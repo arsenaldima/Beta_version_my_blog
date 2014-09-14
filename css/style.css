@@ -10,3 +10,179 @@
     cursor:progress;
 
 }
+
+@font-face {
+    font-family: Pompadur; /* Гарнитура шрифта */
+    src: url(http://web/css/8429192.ttf); /* Путь к файлу со шрифтом */
+}
+
+.navbar .brand {
+
+    font-family: Pompadur, 'Comic Sans MS', cursive;
+}
+
+
+.category{
+display: block;
+letter-spacing: 10px;
+padding-top: 10px;
+padding-bottom: 10px;
+background-color: #ffffff;
+text-align: center;
+font-size: 16px;
+    font-family: times;
+border: 1px solid #ddd;
+    border-bottom-width: 2px;
+    border-bottom-color: #000000;
+    border-radius: 10px 10px 0 0;
+
+}
+#NewComFormId{
+    display: none;
+}
+#contentUser{
+    width: 590px;
+
+}
+.textCom{
+    font-size: 16px;
+    font-family: times;
+    color: #000000;
+    border: 0;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    border-bottom: 2px solid #000000;
+    text-transform: uppercase;
+}
+.linkCom{
+    margin-left: 40px;
+
+}
+.linkCom:hover{
+    cursor: pointer;
+}
+.items > div:after{
+    content: "";
+}
+
+body{
+ background-color: #f7f7fa;
+}
+.nav > li> a{
+       margin-top: 3%;
+}
+
+.nav{
+    background-color: #ffffff;
+}
+
+
+.badge{
+    min-width:20px;
+    min-height: 20px;
+}
+
+.dd{
+    margin-left: 5%;
+}
+.textFamile{
+    font-size: 16px;
+    font-family: FontAwesome;
+}
+.blok{
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 0;
+    border-left: 1px solid #eee;
+
+}
+
+
+.hrd {
+
+    border: 0;
+    border-bottom: 1px solid #f7f7fa;
+}
+.hrd > h3{
+text-align: center;
+    color: #0000ff;
+    width: 20%;
+    margin: 0;
+    margin-left: 40%;
+
+    border: 0;
+    border-bottom: 1px solid red;
+}
+.hrd > h2{
+    letter-spacing: 10px;
+    color: #0000ff;
+    text-shadow: #f7f7fa 2px 2px 1px;
+    font-family: times;
+}
+
+.page:before
+{content: "";}
+.page:after{content: "";}
+
+.pager{
+    display: none;
+}
+
+.nav > li > a:hover
+{
+    border-color: red;
+    color: red;
+}
+.CatItem > li > a{
+    margin: 0;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px 5px 5px 5px;
+}
+.CatItem > li > a>span{
+    font-family: times;
+    font-size: 16px;
+    letter-spacing:10px;
+    text-decoration: blueviolet;
+    text-transform:uppercase;
+}
+.CatItem > li > a:hover{
+
+    background-color: #f7f7fa;
+    border-color: #0000ff;
+}
+.liDrop >li> a:hover{
+    color: #0000ff;
+
+}
+.liDrop >li> a:hover span{
+    background-color: #0000ff;
+
+}
+.linkUser> li > a{
+    text-transform:capitalize;
+    word-spacing:5px;
+    font-family: times;
+    text-align: left;
+}
+.sizeKom{
+    width: 270px;
+}
+.ButPolClass{
+  display: none;
+}
+.StrTable >td{
+    width: 30%;
+}
+
+.avatar{
+    display: none;
+}
+.er{
+    color: red;
+}
+#content1{
+    margin-bottom: 10px;
+
+}

@@ -5,21 +5,28 @@
 /* @var $category CmsCategory */
 /* @var $val Yii::app()->request->getParam('data') */
 
-Yii::app()->clientScript->registerScriptFile('http://web/js/Page.js');
 
+Yii::app()->clientScript->registerScriptFile('http://web/js/page.js');
 ?>
 
 
-<h4>Введите дату для сортировки</h4>
+
 <?php $this->breadcrumbs=array('Категории : ' . $category->title,);
 		 ?>
 
 
+<div class="form-group">
+    <label for="inputEmail3" class="col-md-4 control-label">Введите дату для сортировки</label>
+    <div class="col-md-3 container-fluid">
+        <input type="date" id="dat" name="data" class="form-control" value="<?echo $val ?>">
+        <input type="hidden" id='day' value="<?echo date('d',time())?>">
+        <input type="hidden" id='month' value="<?echo date('m',time())?>">
+        <input type="hidden" id='year' value="<?echo date('Y',time())?>">
+        <input type="hidden" id='cat' value="<?echo Yii::app()->request->getParam('id')?>">
+    </div>
+</div>
 
-<form>
-    <input type="date" name="data" id="dat" value="<?echo $val ?>" >
-    <? echo CHtml::hiddenField('id',Yii::app()->request->getParam('id'),array('id'=>'CatId'));?>
-</form>
+<br>
+<br>
 
 <? $this->renderPartial('widget',array('data'=>$data )); ?>
-

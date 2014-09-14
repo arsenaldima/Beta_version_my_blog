@@ -38,11 +38,11 @@ class TbDropdown extends TbBaseMenu
 	{
 		if (isset($item['icon']))
 		{
-			if (strpos($item['icon'], 'icon') === false)
-			{
-				$pieces = explode(' ', $item['icon']);
-				$item['icon'] = 'icon-'.implode(' icon-', $pieces);
-			}
+			//if (strpos($item['icon'], 'icon') === false)
+			//{
+			//	$pieces = explode(' ', $item['icon']);
+			//	$item['icon'] = 'icon-'.implode(' icon-', $pieces);
+			//}
 
 			$item['label'] = '<i class="'.$item['icon'].'"></i> '.$item['label'];
 		}

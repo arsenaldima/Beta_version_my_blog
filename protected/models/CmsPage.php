@@ -131,9 +131,9 @@ class CmsPage extends CActiveRecord
             $this->SaveImage();
 
             if(empty($this->created))
-            $this->created=time();
-            $this->user_id=Yii::app()->user->id;
-            $model=CmsSetting::model()->findByPk(1);
+                $this->created=time();
+                $this->user_id=Yii::app()->user->id;
+                $model=CmsSetting::model()->findByPk(1);
 
             if(($model->publicazia_stat==1)&&($this->status!=0))
                 $this->status=2;

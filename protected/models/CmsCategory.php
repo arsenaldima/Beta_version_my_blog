@@ -97,7 +97,7 @@ class CmsCategory extends CActiveRecord
 	}
     public static function all()
     {
-     return CHtml::listData(self::model()->findAll(),'id','title');
+     return CHtml::listData(self::model()->findAllByAttributes(array('position'=>'top')),'id','title');
     }
 
     public static function menu($position)
@@ -108,7 +108,8 @@ class CmsCategory extends CActiveRecord
         foreach($model as $one)
         {
 
-            $array[]=array('label'=>$one->title,'url'=>array('/page/index/id/'.$one->id),);
+            
+            $array[]=array('label'=>$one->title,'url'=>array('/page/index/id/'.$one->id),'icon'=>'fa fa-arrow-right fa-border fa-2x','data'=>CmsPage::model()->countByAttributes(array('category_id'=>$one->id,'status'=>2)));
 
         }
         return $array;

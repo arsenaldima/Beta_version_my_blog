@@ -10,18 +10,32 @@ $this->breadcrumbs=array(
 
 ?>
 <? if (isset($flag)):?>
-    <h2>Что б авторизироваться перейдите по ссылке указаном в email </h2>
-<? endif ?>
+<div class="well well-lg text-center">
 
-
-
-
+        <p class="text-info">
+            <h2>Что б авторизироваться перейдите по ссылке указаном в email </h2>
+        </p>
+</div>
+<? endif; ?>
 
 <? if (!isset($flag)):?>
+    <div class="text-center">
+        <h1>Авторизация</h1>
+    </div>
+    <div class="well well-lg text-center">
 
-<h1>Авторизация</h1>
+        <p class="text-info">Поля с <span class="required">*</span> обязательный.</p>
 
-<div class="form">
+        <h5>Вы имеете акаунт в соц. сетях? Кликните на иконку для авторизации:</h5>
+
+        <?php Yii::app()->eauth->renderWidget(); ?>
+
+    </div>
+
+
+
+
+<div class="row container-fluid col-md-4">
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'login-form',
@@ -31,16 +45,17 @@ $this->breadcrumbs=array(
 		'validateOnSubmit'=>true,
 	),
 )); ?>
+    <?if(!$form->errorSummary($model,null, null,array('class'=>'text-warning er'))):?>
+        <div class="well well-lg text-center">
 
-	<p class="note">Поля с <span class="required">*</span>  есть обязательными.</p>
+            <p class="text-warning"><?php echo $form->errorSummary($model,null, null,array('class'=>'text-warning er')); ?></p>
+        </div>
+    <? endif; ?>
+	<?php echo $form->textFieldRow($model,'username',array('class'=>'form-control')); ?>
 
+	<?php echo $form->passwordFieldRow($model,'password',array('class'=>'form-control')); ?>
     <br>
-
-	<?php echo $form->textFieldRow($model,'username'); ?>
-
-	<?php echo $form->passwordFieldRow($model,'password'); ?>
-
-	<?php echo $form->checkBoxRow($model,'rememberMe'); ?>
+    <br>
 
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
@@ -54,10 +69,10 @@ $this->breadcrumbs=array(
 
 
     <?php $this->endWidget(); ?>
+</div><!-- form -->
+<div class="row-fluid">
 
-    <h5>Вы имеете акаунт в соц. сетях? Кликните на иконку для авторизации:</h5>
-
-    <?php Yii::app()->eauth->renderWidget(); ?>
 
     <? endif ?>
-</div><!-- form -->
+
+</div>

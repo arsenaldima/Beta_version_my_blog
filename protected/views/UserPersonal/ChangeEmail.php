@@ -5,29 +5,39 @@ Yii::app()->clientScript->registerScriptFile('http://web/js/CheckEmail.js');
 ?>
 
 <?php if(Yii::app()->user->hasFlash('success')):?>
-    <div class="info">
-       <h3> <?php echo Yii::app()->user->getFlash('success'); ?></h3>
+    <div class="bg-success well well-lg text-center">
+        <h4><?php echo Yii::app()->user->getFlash('success'); ?></h4>
     </div>
 <?php endif; ?>
 
 <?php if(Yii::app()->user->hasFlash('error')):?>
-<div class="info">
-    <h3><?php echo Yii::app()->user->getFlash('error'); ?></h3>
-</div>
+    <div class="bg-warning well well-lg text-center">
+        <?php echo Yii::app()->user->getFlash('error'); ?>
+    </div>
 <?php endif ?>
 
 
 <?php if($flag): ?>
 
-<?php echo CHtml::form('','POST'); ?>
-<?php echo CHtml::encode('Введите новый email');?>
-<br>
-<br>
-<?php echo CHtml::textField('email','',array('id'=>'text'));?>
-<br>
-<br>
-<?php echo CHtml::submitButton('Отправить',array('class'=>'btn btn-primary','id'=>'sub'));?>
-<?php echo CHtml::endForm()?>
+    <div class="row-fluid">
+        <div class="col-md-6 container-fluid">
+
+                <? echo CHtml::form('','POST',array('role'=>'form'));?>
+
+                <div class="form-group">
+                    <label for="text">Email address</label>
+                    <?php echo CHtml::textField('email','',array('id'=>'text','placeholder'=>'Enter email','class'=>'form-control','type'=>'email'));?>
+
+                </div>
+
+                <?
+                echo CHtml::submitButton('Отправить',array('class'=>'btn btn-primary', 'id'=>'sub'));
+                echo CHtml::endForm();
+
+            ?>
+        </div>
+    </div>
+
 <?php endif ?>
 
 

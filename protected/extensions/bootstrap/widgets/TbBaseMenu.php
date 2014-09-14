@@ -8,6 +8,7 @@
  */
 
 Yii::import('zii.widgets.CMenu');
+Yii::import('application.models');
 
 abstract class TbBaseMenu extends CMenu
 {
@@ -80,10 +81,13 @@ abstract class TbBaseMenu extends CMenu
 						else
 							$options['class'] = $classes;
 					}
-
+                    $options['class'] .= " text-center textFamile";
 					echo CHtml::openTag('li', $options);
 
-					$menu = $this->renderMenuItem($item);
+                   //echo CHtml::openTag('i',array('class'=>'fa fa-arrow-right pull-left'));
+				//	echo "</i>";
+
+                    $menu = $this->renderMenuItem($item);
 
 					if (isset($this->itemTemplate) || isset($item['template']))
 					{
@@ -118,16 +122,11 @@ abstract class TbBaseMenu extends CMenu
 	 */
 	protected function renderMenuItem($item)
 	{
-		if (isset($item['icon']))
-		{
-			if (strpos($item['icon'], 'icon') === false)
-			{
-				$pieces = explode(' ', $item['icon']);
-				$item['icon'] = 'icon-'.implode(' icon-', $pieces);
-			}
 
-			$item['label'] = '<i class="'.$item['icon'].'"></i> '.$item['label'];
-		}
+
+
+
+        $item['label']=CHtml::openTag('i',array('class'=>'fa fa-arrow-right fa-align-right pull-left'))."</i>".'&nbsp;'.'&nbsp;'. $item['label'].CHtml::openTag('span',array('class'=>'badge pull-right')).$item['data']."</span>";
 
 		if (!isset($item['linkOptions']))
 			$item['linkOptions'] = array();
@@ -146,12 +145,14 @@ abstract class TbBaseMenu extends CMenu
 		}
 
 		if (isset($item['url']))
-			return CHtml::link($item['label'], $item['url'], $item['linkOptions']);
+			return CHtml::link($item['label'], $item['url'], array('class'=>'list-group-item'));
 		else
 			return $item['label'];
 	}
 
-	/**
+
+
+    /**
 	 * Normalizes the {@link items} property so that the 'active' state is properly identified for every menu item.
 	 * @param array $items the items to be normalized.
 	 * @param string $route the route of the current request.

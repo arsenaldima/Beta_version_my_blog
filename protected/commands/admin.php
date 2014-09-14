@@ -1,3 +1,4 @@
+<?php
 class AdminCommand extends CConsoleCommand {
     public function run($args) {
       $newUser = new Users;

@@ -25,9 +25,14 @@ class PageController extends ApiController
         */
     public function actionDelete($id)
     {
+        if(Yii::app()->user->id==$id)
+        {
+            $this->loadModel($id)->delete();
+            $this->sendResponse(self::STATUS_OK);
+        }
 
-        $this->loadModel($id)->delete();
-        $this->sendResponse(self::STATUS_OK);
+        else
+        $this->sendResponse(self::STATUS_BAD_REQUEST);
 
     }
 
@@ -61,7 +66,10 @@ class PageController extends ApiController
 
     public function loadModel($id)
     {
-        $model=CmsPage::model()->findByPk($id);
+        $criteria=new CDbCriteria();
+        $criteria="id=:id";
+        $criteria->params=array(':id'=>$id);
+        $model=CmsPage::model()->find($criteria);
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
         return $model;

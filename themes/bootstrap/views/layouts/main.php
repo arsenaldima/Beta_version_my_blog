@@ -11,39 +11,100 @@
 
 	<?php Yii::app()->bootstrap->register();
     Yii::app()->clientScript->registerCssFile('http://web/css/page.css');
+    Yii::app()->clientScript->registerCssFile('http://web/css/font-awesome.css');
+    Yii::app()->clientScript->registerCssFile('http://web/css/style.css');
     ?>
 
 </head>
 
+
 <body>
 
-<?php $this->widget('bootstrap.widgets.TbNavbar',array(
-    'items'=>array(
-        array(
-            'class'=>'bootstrap.widgets.TbMenu',
-            'items'=>array(
-                array('label'=>'Home', 'url'=>array('/site/index')),
-               // array('label'=>'Категори','items'=>CmsCategory::menu('left')),
-                array('label'=>'Админка', 'url'=>array('/admin/default/index'),'visible'=>Yii::app()->user->checkAccess('3')||Yii::app()->user->checkAccess('2')),
-                array('label'=>'Регистрация', 'url'=>array('/site/registration','id'=>0),'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Пользователь', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-                array('label'=>'Пользователь ('.Yii::app()->user->name.')', 'url'=>array('/userPersonal/index','id'=>Yii::app()->user->id), 'visible'=>!Yii::app()->user->isGuest)
-            ),
-        ),
-    ),
-)); ?>
+
+<div class="container">
+    <div class="col-md-offset-2">
+
+    </div>
+    <div class="col-md-10">
+        <div class="container">
+            <div class="row">
+                <div class="nav navbar-default">
+                    <div class="container">
+
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="<?echo Yii::app()->homeUrl?>"><? echo Yii::app()->name?><span class="blok"></span></a>
+
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#responsive-menu"></button>
+                        </div>
+
+
+                        <div class="collapse navbar-collapse" id="responsive-menu">
+
+
+
+                            <ul class="nav nav-pills">
+
+                                <li class="dd"><a href="/site/index">Home</a></li>
+                                <?if(Yii::app()->user->checkAccess('3')||Yii::app()->user->checkAccess('2'))
+                                {
+
+                                    echo CHtml::openTag('li',array('class'=>'dd'));
+                                    echo  CHtml::link('Админка','/admin/default/index');
+                                    echo"</li>";
+                                }
+                                ?>
+
+                                <?
+                                if(Yii::app()->user->isGuest)
+                                {
+                                    echo CHtml::openTag('li',array('class'=>'dd'));
+                                    echo  CHtml::link('Регистрация',array('/site/registration','id'=>0));
+                                    echo"</li>";
+                                }
+                                ?>
+
+                                <?
+                                if(Yii::app()->user->isGuest)
+                                {
+                                    echo CHtml::openTag('li',array('class'=>'dd'));
+                                    echo  CHtml::link('Авторизация',array('/site/login'));
+                                    echo"</li>";
+                                }
+                                ?>
+
+                                <?
+                                if(!Yii::app()->user->isGuest)
+                                {
+                                    echo CHtml::openTag('li',array('class'=>'dd'));
+                                    echo  CHtml::link(Yii::app()->user->name ,array('/userPersonal/index','id'=>Yii::app()->user->id));
+                                    echo"</li>";
+                                }
+                                ?>
+
+
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 
 <div class="container" id="page">
 
-	<?php if(isset($this->breadcrumbs)):?>
-		<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
-			'links'=>$this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
-	<?php endif?>
+
+
 
 	<?php echo $content; ?>
 
-	<div class="clear"></div>
+
 
 
 

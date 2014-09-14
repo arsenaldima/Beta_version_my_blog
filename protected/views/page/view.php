@@ -7,25 +7,76 @@
 
 Yii::app()->clientScript->registerScriptFile('http://web/js/viewcom.js');
 ?>
+<div class="row">
 
-<?php $this->breadcrumbs=array('Категории : ' . $model->category->title => array('index','id'=>$model->category_id),$model->title);
-?>
-    <h1 style="text-align: center">  <?php  echo $model->title; ?> </h1>
+    <div class="thumbnail">
 
-    <?php if(($model->user_id==Yii::app()->user->id)&&($model->status==0))
-        echo CHtml::link('Редактировать',array('/UserPersonal/update','id'=>$model->id))?>
-    <br>
+        <?php if(($model->user_id==Yii::app()->user->id)&&($model->status==0))
+        {
+            echo CHtml::openTag('div',array('class'=>'text-center'));
+            echo "<hr/>";
+            echo CHtml::link(CHtml::openTag('i',array('class'=>'fa fa-pencil')).'&nbsp;'.'&nbsp;'.'Редактировать'.'</i>',array('UserPersonal/update','id'=>$model->id),array('class'=>'text-center'));
+            echo "<hr/>";
+            echo"</div>";
+        }?>
 
-    <table cellspacing="20" >
+        <?echo CmsSetting::carimage($model->path_img,630,150,'img-thumbnail',1,$model->user->id);?>
 
-       <tr ><td><b>Дата создания  <?php echo date('j.m.Y H:i',$model->created);  ?></b></td></tr>
-       <tr ><td><b>Пользователь </b>  <?php echo CHtml::link( $model->user->username,array('/UserPersonal/index','id'=>$model->user->id))  ?></td></tr>
+        <div class="caption">
 
-    </table>
-    <br>
-    <hr />
+            <div class="hrd text-center">
 
-    <?php echo $model->content;?>
+                <h2><? echo   strtoupper($model->title)?></h2>
+                <h3></h3>
+
+            </div>
+
+
+        </div>
+
+        <div class="text-center">
+
+                <span>
+                    <?
+                    switch($model->user->role)
+                    {
+                        case 1: {echo CHtml::link($model->user->username,array('UserPersonal/index','id'=>$model->user->id)); break;}
+                        case 2: {echo CHtml::link('Модератор',array('UserPersonal/index','id'=>$model->user->id)); break;}
+                        case 3: {echo CHtml::link(CHtml::openTag('i',array('class'=>'fa fa-user')).'&nbsp;'.'&nbsp;'.'Администратор'.'</i>',array('UserPersonal/index','id'=>$model->user->id)); break;}
+                    }
+                    ?>
+                    /
+                    <?echo CHtml::link(CHtml::openTag('i',array('class'=>'fa fa-calendar')).'&nbsp;'.'&nbsp;'.date('j F Y',$model->created).'</i>',array('page/PageCriteria','data'=>date('Y-m-j',$model->created)));?>
+                    /
+                    <?echo CHtml::link(CHtml::openTag('i',array('class'=>'fa fa-comment')).'&nbsp;'.CmsComment::model()->countByAttributes(array('page_id'=>$model->id)).'&nbsp;'."Комментариев".'</i>',array('page/view','id'=>$model->id));?>
+                </span>
+
+        </div>
+        <hr/>
+        <div class="text-info">
+            <? echo $model->content?>
+        </div>
+        <hr/>
+
+
+
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="thumbnail textCom">
+        <?echo CmsComment::model()->countByAttributes(array('page_id'=>$model->id,'status'=>1));?>  &nbsp; коментариев
+        <?
+            $flag=CmsSetting::model()->findByPk(1);
+            if(!Yii::app()->user->isGuest||(Yii::app()->user->isGuest && $flag->gost_com)):
+        ?>
+        <a class="linkCom" id="linkComId"><i class="fa fa-pencil-square-o">&nbsp;Оставить Комментарий</i></a>
+        <?endif;?>
+    </div>
+</div>
 
     <?php
     if(($model->status!=0)&&($model->status!=1))

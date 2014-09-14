@@ -7,16 +7,46 @@ class PageController extends Controller
 	public function actionIndex($id)
 	{
 
-        $category= CmsCategory::model()->findByPk($id);
+        $this->processPageRequest('page');
 
-        $criteria= new CDbCriteria;
+        if($dataStr=Yii::app()->request->getParam('data'))
+        {
 
-        $criteria->condition = 'status = 2 AND category_id = '.$category->id.' AND '.'created < '.time();
+            if(!empty($dataStr))
+            {
+                $data=strtotime($dataStr);
+                $criteria= new CDbCriteria;
+                $criteria->condition = 'category_id =:id AND status=2 AND DATE_FORMAT(FROM_UNIXTIME(created), "%Y%m%d")=:data';
+                $criteria->params=array(':data'=>date('Ymd',$data),':id'=>$id);
+                $model=CmsSetting::model()->findByPk(1);
+                $prow= new CActiveDataProvider('CmsPage',array('criteria'=>$criteria,'pagination'=>array('pageSize'=>$model->ct_page,'pageVar' =>'page')));
 
-        $model=CmsSetting::model()->findByPk(1);
-        $prow= new CActiveDataProvider('CmsPage',array('criteria'=>$criteria,'pagination'=>array('pageSize'=>$model->ct_page),));
+            }
+        }
+        else
+        {
+            $category= CmsCategory::model()->findByPk($id);
+            $criteria= new CDbCriteria;
+            $criteria->condition = 'status = 2 AND category_id =:id AND '.'created < :time';
+            $criteria->params=array(':id'=>$id,':time'=>time());
+            $criteria->order='created DESC';
+            $model=CmsSetting::model()->findByPk(1);
+            $prow= new CActiveDataProvider('CmsPage',array('criteria'=>$criteria,'pagination'=>array('pageSize'=>$model->ct_page,'pageVar' =>'page'),));
+        }
+        if (Yii::app()->request->isAjaxRequest){
+            $this->renderPartial('widget_ajax', array(
+                'category'=>$category,
+                'data'=>$prow,
 
-		$this->render('index',array('category'=>$category, 'data'=>$prow));
+            ));
+            Yii::app()->end();
+        } else {
+            $this->render('index', array(
+                'category'=>$category,
+                'data'=>$prow,
+                'val'=>$dataStr,
+            ));
+        }
 	}
 
     public function actionView($id)
@@ -53,77 +83,20 @@ class PageController extends Controller
 public function actionDelete($id)
 {
     $model=CmsComment::model()->findByPk($id);
-    if(CmsComment::model()->deleteByPk($id))
-    $this->redirect(array('/page/view','id'=>$model->page_id));
+
+    if(Yii::app()->user->id==$model->user_id)
+        if(CmsComment::model()->deleteByPk($id))
+            $this->redirect(array('/page/view','id'=>$model->page_id));
 
 }
 
-    public function actionPageCriteria()
+
+
+    protected function processPageRequest($param='page')
     {
-        if($dataStr=Yii::app()->request->getParam('data'))
-        {
-            if(!empty($dataStr))
-            {
-            $data=strtotime($dataStr);
-                if($data<=time())
-                {
-                    $criteria= new CDbCriteria;
-                    $criteria->condition = 'status = 2';
-                    $criteria->addBetweenCondition('created',$data+1,$data+86399);//1 nachalo dna 1409864400 1409950800
-                    $model=CmsSetting::model()->findByPk(1);
-                    $prow= new CActiveDataProvider('CmsPage',array('criteria'=>$criteria,'pagination'=>array('pageSize'=>$model->ct_page)));
-                }else
-                {
-                    $criteria= new CDbCriteria;
-                    $criteria->condition = 'status = 2 AND created < '.time();
-
-                    $model=CmsSetting::model()->findByPk(1);
-                    $prow= new CActiveDataProvider('CmsPage',array('criteria'=>$criteria,'pagination'=>array('pageSize'=>$model->ct_page)));
-                    $dataStr=null;
-                }
-             }
-            $this->render('index',array('data'=> $prow, 'val'=>$dataStr));
-        }
-
-
+        if (Yii::app()->request->isAjaxRequest && isset($_POST[$param]))
+            $_GET[$param] = Yii::app()->request->getPost($param);
     }
-    public function actionAjaxComment()
-    {
 
 
-        $model=CmsUser::model()->findByPk(Yii::app()->user->id);
-
-
-        if($model->podpis==0)
-            return CmsUser::model()->updateByPk(Yii::app()->user->id,array('podpis'=>'1'));
-        else
-            return CmsUser::model()->updateByPk(Yii::app()->user->id,array('podpis'=>'0'));
-
-          /*  if(isset($_POST['content']))
-            {
-             $model=new CmsComment();
-                if(Yii::app()->user->isGuest)
-                    $model->scenario='ComSet';
-
-                $model->content=$_POST['content'];
-
-                if(isset($_POST['email']))
-                    $model->guest=$_POST['email'];
-                else
-                    $model->user_id=Yii::app()->user->id;
-                $model->parent_id=$_POST['parent'];
-
-                if($model->save())
-                   return true;
-                else
-                    return false;
-            }
-            return false;
-
-        $model=new CmsComment();
-        $model->content="asdfasdfsdf";
-        $model->page_id=1;
-        $model->user_id=2;
-        $model->save();*/
-    }
 }

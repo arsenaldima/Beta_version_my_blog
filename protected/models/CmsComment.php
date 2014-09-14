@@ -139,19 +139,21 @@ class CmsComment extends CActiveRecord
     public static function vivod($id)
     {
         $criteria= new CDbCriteria;
-        $criteria->compare('page_id',$id);
+        $criteria->condition='page_id=:id AND status=0 OR status=2';
+        $criteria->params=array(':id'=>$id);
          $model=CmsSetting::model()->findByPk(1);
 
-       return new CActiveDataProvider('CmsComment',array('criteria'=>$criteria,'pagination'=>array('pageSize'=>$model->ct_com),));
+       return new CActiveDataProvider('CmsComment',array('criteria'=>$criteria));
     }
 
 
     public static function MyComments($id)
     {
         $criteria= new CDbCriteria;
-        $criteria->condition='user_id='.$id.' AND status=1';
+        $criteria->condition='user_id=:id AND status=1';
+        $criteria->params=array(':id'=>$id);
 
-        return new CActiveDataProvider('CmsComment',array('criteria'=>$criteria,'pagination'=>array('pageSize'=>5),));
+        return new CActiveDataProvider('CmsComment',array('criteria'=>$criteria));
     }
 
     public function getCommentsTree($id) {

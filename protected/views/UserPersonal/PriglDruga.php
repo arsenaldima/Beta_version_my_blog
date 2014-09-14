@@ -6,29 +6,32 @@ Yii::app()->clientScript->registerScriptFile('http://web/js/CheckEmail.js');
 ?>
 
 <?php if(Yii::app()->user->hasFlash('success')):?>
-    <div class="info">
-        <?php echo Yii::app()->user->getFlash('success'); ?>
+    <div class="bg-success well well-lg text-center">
+        <h4><?php echo Yii::app()->user->getFlash('success'); ?></h4>
     </div>
 <?php endif; ?>
 <?php if(Yii::app()->user->hasFlash('error')):?>
-    <div class="info">
+    <div class="bg-warning well well-lg">
         <?php echo Yii::app()->user->getFlash('error'); ?>
     </div>
 <?php endif; ?>
 <br>
 
-<? if(Yii::app()->user->hasFlash('error')&&Yii::app()->user->hasFlash('success')):?>
-<?php echo CHtml::form('','POST');
+<div class="row-fluid">
+    <div class="col-md-6 container-fluid">
+        <? if(!Yii::app()->user->hasFlash('error')&&!Yii::app()->user->hasFlash('success')):?>
+        <? echo CHtml::form('','POST',array('role'=>'form'));?>
 
-?>
-<?php echo CHtml::encode('Введите email друга');?>
-<br>
-<br>
-<?php echo CHtml::textField('email','',array('id'=>'text'));?>
-<br>
-<br>
-<?php echo CHtml::submitButton('Отправить',array('class'=>'btn btn-primary','id'=>'sub'));?>
-<?php echo CHtml::endForm();
-endif;
-?>
+            <div class="form-group">
+                <label for="text">Email address</label>
+                <?php echo CHtml::textField('email','',array('id'=>'text','placeholder'=>'Enter email','class'=>'form-control','type'=>'email'));?>
 
+            </div>
+
+        <?
+            echo CHtml::submitButton('Отправить',array('class'=>'btn btn-primary', 'id'=>'sub'));
+            echo CHtml::endForm();
+            endif;
+        ?>
+    </div>
+</div>

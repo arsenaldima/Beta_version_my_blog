@@ -4,70 +4,66 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
+<div class="row-fluid">
+    <div class="col-md-6 container-fluid">
 
-    <?php $form=$this->beginWidget('CActiveForm', array(
-        'id'=>'cms-user-form',
-        // Please note: When you enable ajax validation, make sure the corresponding
-        // controller action is handling ajax validation correctly.
-        // There is a call to performAjaxValidation() commented in generated controller code.
-        // See class documentation of CActiveForm for details on this.
-        'enableAjaxValidation'=>false,
-    )); ?>
+        <?php $form=$this->beginWidget('CActiveForm', array(
+            'id'=>'cms-user-form',
+            'enableAjaxValidation'=>false,
+        )); ?>
 
-    <p class="note">Поля с <span class="required">*</span>  есть обязательные.</p>
-
-    <?php echo $form->errorSummary($model); ?>
-
-    <div class="row">
-        <?php echo $form->labelEx($model,'username'); ?>
-        <?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>255)); ?>
-        <?php echo $form->error($model,'username'); ?>
-    </div>
-
-    <div class="row">
-        <?php echo $form->labelEx($model,'password'); ?>
-        <?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>255)); ?>
-        <?php echo $form->error($model,'password'); ?>
-    </div>
-
-    <div class="row">
-        <?php echo $form->labelEx($model,'repeat_password'); ?>
-        <?php echo $form->passwordField($model,'repeat_password',array('size'=>60,'maxlength'=>255)); ?>
-        <?php echo $form->error($model,'repeat_password'); ?>
-    </div>
-
-
-    <div class="row">
-        <?php echo $form->labelEx($model,'email'); ?>
-        <?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>255)); ?>
-        <?php echo $form->error($model,'email'); ?>
-    </div>
-
-
-
-    <?php if(CCaptcha::checkRequirements()): ?>
-        <div class="row">
-            <?php echo $form->labelEx($model,'verifyCode'); ?>
-            <div>
-                <?php $this->widget('CCaptcha'); ?>
-                <br>
-                <?php echo $form->textField($model,'verifyCode'); ?>
-            </div>
-            <br>
-            <div class="hint">
-            <?php echo $form->error($model,'verifyCode'); ?>
+        <div class="well well-lg text-center">
+            <p class="text-info">Поля с <span class="required">*</span> обязательный.</p>
+            <p class="text-warning"><?php echo $form->errorSummary($model,null, null,array('class'=>'text-warning er')); ?></p>
         </div>
-    <?php endif; ?>
+
+        <div class="form-group">
+            <label for="textLogin">Введите имя пользователя</label>
+            <?php echo $form->textField($model,'username',array('id'=>'textLogin','placeholder'=>'Введите имя пользователя','class'=>'form-control','type'=>'text')); ?>
 
 
-    <br>
-    <br>
+        </div>
 
-    <div class="row buttons">
-        <?php echo CHtml::submitButton('Регистрация',array('class'=>'btn btn-primary btn-lg')); ?>
+        <div class="form-group">
+            <label for="text">Введите email</label>
+            <?php echo $form->textField($model,'email',array('id'=>'text','placeholder'=>'Введите email','class'=>'form-control','type'=>'email'));?>
+
+        </div>
+        <div class="form-group">
+            <label for="textPas">Введите пароль</label>
+            <?php echo $form->textField($model,'password',array('id'=>'textPas','placeholder'=>'Введите пароль','class'=>'form-control','type'=>'password'));?>
+        </div>
+
+        <div class="form-group">
+            <label for="textPasRep">Повторите пароль</label>
+            <?php echo $form->textField($model,'repeat_password',array('id'=>'textPasRep','placeholder'=>'Повторите пароль','class'=>'form-control','type'=>'password'));?>
+        </div>
+    </div>
+</div>
+    <div class="row-fluid">
+        <div class="col-md-5 container-fluid">
+            <?php if(CCaptcha::checkRequirements()): ?>
+            <div class="form-group">
+                <?php echo $form->labelEx($model,'verifyCode'); ?>
+                <div>
+                    <?php $this->widget('CCaptcha'); ?>
+                    <br>
+                    <?php echo $form->textField($model,'verifyCode',array('class'=>'form-control')); ?>
+                </div>
+                <br>
+                <div class="hint">
+                    <?php echo $form->error($model,'verifyCode'); ?>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-fluid center-block">
+                <?php echo CHtml::submitButton('Регистрация',array('class'=>'btn btn-primary')); ?>
     </div>
 
     <?php $this->endWidget(); ?>
 
-</div><!-- form -->
+
+

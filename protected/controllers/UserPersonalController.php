@@ -20,17 +20,16 @@ class UserPersonalController extends Controller
 
         if(isset($_POST['CmsUser']))
         {
-                $model->attributes=$_POST['CmsUser'];
+            $model->attributes=$_POST['CmsUser'];
 
             if($model->validate())
             {
                 $model->SaveImage();
-               CmsUser::model()->updateByPk(Yii::app()->user->id,array('picture'=>$model->picture));}
-
-            $this->redirect(array('/UserPersonal/index','id'=>Yii::app()->user->id));
-
+                CmsUser::model()->updateByPk(Yii::app()->user->id,array('picture'=>$model->picture));
+                $this->redirect(array('/UserPersonal/index','id'=>Yii::app()->user->id));
+            }
         }
-            $this->render('avatar',array('model'=>$model));
+        $this->render('avatar',array('model'=>$model));
     }
     public function actionChangeEmail($id)
     {
@@ -78,11 +77,11 @@ class UserPersonalController extends Controller
 
             if(CmsUser::sendInvite($_POST['email']))
             {
-                Yii::app()->user->setFlash('success','письмо успешно отправлено');
+                Yii::app()->user->setFlash('success','Письмо успешно отправлено');
 
             }
             else
-                Yii::app()->user->setFlash('error','письмо не отправлено');
+                Yii::app()->user->setFlash('error','Письмо не отправлено');
 
 
                 $this->render('PriglDruga');
@@ -148,30 +147,24 @@ class UserPersonalController extends Controller
 
         if(isset($_POST['CmsPage']))
         {
-
-            $model->attributes=$_POST['CmsPage'];
-
+          $model->attributes=$_POST['CmsPage'];
             if(isset($_POST['data']))
             {
                 if(!empty($_POST['data']))
-                $model->created=strtotime($_POST['data']);
+                    if(strtotime($_POST['data'])>time())
+                        $model->created=strtotime($_POST['data']);
+                    else
+                        $model->created=time();
             }
-
-      //     $purifier = new HTMLPurifier();
-       //   $model->content = $purifier->purify($model->content);
-
              if($model->save())
                 $this->redirect(array('/page/View','id'=>$model->id));
-
         }
-
         $this->render('create',array('model'=>$model, ));
     }
 
     public function actionUpdate($id)
     {
         $model=CmsPage::model()->findByPk($id);
-
         if(isset($_POST['ajax']) && $_POST['ajax']==='cms-page-form')
         {
             echo CActiveForm::validate($model);
@@ -182,10 +175,7 @@ class UserPersonalController extends Controller
         {
             if($model->validate())
             {
-
-
                 $model->SaveImage();
-
                 CmsPage::model()->updateByPk($id,array('path_img'=>$model->path_img,'content'=>$model->content, 'title'=>$model->title));
 
             }

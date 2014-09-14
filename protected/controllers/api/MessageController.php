@@ -13,7 +13,10 @@ class MessageController extends ApiController
     {
         if($id=Yii::app()->request->getParam('id'))
         {
-            return $this->sendResponse(self::STATUS_OK,CmsComment::model()->findAllByAttributes(array('page_id'=>$id)));
+            $criteria=new CDbCriteria();
+            $criteria="page_id=:id";
+            $criteria->params=array(':id'=>$id);
+            return $this->sendResponse(self::STATUS_OK,CmsComment::model()->findAll($criteria));
         }
         else
             return $this->sendResponse(self::STATUS_BAD_REQUEST,"Недостаточно параметров");
@@ -41,7 +44,10 @@ class MessageController extends ApiController
     public function actionDeleteComment()
 {
     if($id=Yii::app()->request->getParam('id'))
-        return $this->sendResponse(self::STATUS_OK,CmsComment::model()->deleteByPk($id));
+    {
+        if($id==Yii::app()->user->id)
+            return $this->sendResponse(self::STATUS_OK,CmsComment::model()->deleteByPk($id));
+    }
     else
         return $this->sendResponse(self::STATUS_INTERNAL_SERVER_ERROR,"Запись не удалена");
 }//Удалить комментария по id

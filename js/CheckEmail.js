@@ -4,6 +4,7 @@
 
             if (!reg_mail.test($('#text').val()))
             {
+                $('#text').val(null);
                 alert('Проверьте правильность данных!');
                 return false;
             }
