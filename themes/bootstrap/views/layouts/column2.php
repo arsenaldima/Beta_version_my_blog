@@ -6,28 +6,33 @@
     <div class="col-md-offset-2 col-lg-offset-2">
 
     </div>
+
     <div class="col-md-2 col-lg-3">
     <div class="container-stacked">
-         <div class="dropdown">
-            <button class="btn btn-default CatItem dropdown-toggle " type="button" id="dropdownMenu1" data-toggle="dropdown">
-                <span> Категории <span class="caret"></span></span>
+        <ul class="CatItem nav nav-pills nav-stacked ">
 
-            </button>
-            <ul class="dropdown-menu liDrop list-group" role="menu" aria-labelledby="dropdownMenu1">
-                <?
-                  foreach(CmsCategory::menu('top') as $one):
-                  $a=CHtml::openTag('i',array('class'=>'fa fa-arrow-right pull-left'))."</i>".'&nbsp;'.'&nbsp;'. $one['label'].'&nbsp;'.'&nbsp;'.'&nbsp;'.'&nbsp;'.CHtml::openTag('span',array('class'=>'badge pull-right')).$one['data']."</span>";
+
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+               <span> Категории <span class="caret"></span></span>
+            </a>
+            <ul class="dropdown-menu liDrop">
+                <?php
+
+                foreach(CmsCategory::menu('top') as $one)
+                {
+                    $a=CHtml::openTag('i',array('class'=>'fa fa-arrow-right pull-left'))."</i>".'&nbsp;'.'&nbsp;'. $one['label'].'&nbsp;'.'&nbsp;'.'&nbsp;'.'&nbsp;'.CHtml::openTag('span',array('class'=>'badge pull-right')).$one['data']."</span>";
+                    echo '<li>'.CHtml::link($a, $one['url'], array('class'=>'')).'</li>';
+
+                    echo  CHtml::openTag('li',array('class'=>'divider'))."</li>";
+
+                }
+
+
                 ?>
-                <li role="presentation">
-                    <?echo CHtml::link($a,$one['url'],array('role'=>'menuitem','tabindex'=>'-1','class'=>'fontLink'))?>
-
-
-                </li>
-
-                      <li role="presentation" class="divider"></li>
-               <?endforeach;?>
             </ul>
-        </div>
+        </li>
+        </ul>
     </div>
 
     </div>

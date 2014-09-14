@@ -15,8 +15,8 @@ Yii::app()->clientScript->registerScriptFile('http://web/js/page.js');
 		 ?>
 
 
-<div class="form-group text-center">
-    <label for="inputEmail3" class="col-md-4 control-label">Введите дату для поиска</label>
+<div class="form-group">
+    <label for="inputEmail3" class="col-md-4 control-label">Введите дату для сортировки</label>
     <div class="col-md-3 container-fluid">
         <input type="date" id="dat" name="data" class="form-control" value="<?echo $val ?>">
         <input type="hidden" id='day' value="<?echo date('d',time())?>">

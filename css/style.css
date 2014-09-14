@@ -1,6 +1,3 @@
-@import "http://webfonts.ru/import/bradobrei.css";
-@import "http://webfonts.ru/import/croissant.css";
-@import "http://webfonts.ru/import/egipet.css";
 .modal_size
 {
    font-size: 16px;
@@ -84,7 +81,6 @@ body{
 .badge{
     min-width:20px;
     min-height: 20px;
-    float: none;
 }
 
 .dd{
@@ -93,10 +89,7 @@ body{
 .textFamile{
     font-size: 16px;
     font-family: FontAwesome;
-
-
 }
-
 .blok{
     margin-left: 10px;
     margin-right: 10px;
@@ -141,25 +134,24 @@ text-align: center;
     border-color: red;
     color: red;
 }
-.CatItem {
+.CatItem > li > a{
     margin: 0;
     text-align: center;
     border: 1px solid #ddd;
     border-radius: 5px 5px 5px 5px;
 }
-.CatItem >span{
-
-
+.CatItem > li > a>span{
+    font-family: times;
     font-size: 16px;
     letter-spacing:10px;
-
+    text-decoration: blueviolet;
     text-transform:uppercase;
-    color: #000000;
-
-    font-family: 'Bradobrei';
 }
+.CatItem > li > a:hover{
 
-
+    background-color: #f7f7fa;
+    border-color: #0000ff;
+}
 .liDrop >li> a:hover{
     color: #0000ff;
 
@@ -168,22 +160,11 @@ text-align: center;
     background-color: #0000ff;
 
 }
-.liDrop>li>a{
-    font-family: 'Croissant One';
-    float: none;
-    font-size: 12px;
-    letter-spacing:4px;
-    text-transform:uppercase;
-}
-.liDrop>li{
-    margin-bottom: 10px;}
 .linkUser> li > a{
     text-transform:capitalize;
     word-spacing:5px;
     font-family: times;
     text-align: left;
-
-
 }
 .sizeKom{
     width: 270px;
@@ -204,18 +185,4 @@ text-align: center;
 #content1{
     margin-bottom: 10px;
 
-}
-
-.list-group-item:first-child {
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-}
-.list-group-item:last-child {
-    margin-bottom: 0;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-}
-
-.fontLink{
-    font-family: 'Decorlz';
 }

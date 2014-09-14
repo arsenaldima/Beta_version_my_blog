@@ -27,14 +27,9 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-        $criteria= new CDbCriteria;
-
-        $criteria->order='created DESC';
-        $criteria->compare('status',2);
-        $criteria->limit=4;
-        $model=CmsPage::model()->findAll($criteria);
-
-        $this->render('index',array('model'=>$model));
+		// renders the view file 'protected/views/site/index.php'
+		// using the default layout 'protected/views/layouts/main.php'
+		$this->render('index');
 	}
 
 	/**

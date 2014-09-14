@@ -146,17 +146,7 @@ class CmsPage extends CActiveRecord
     public static function MyPages($id)
     {
         $criteria= new CDbCriteria;
-        if($id==Yii::app()->user->id)
-        {
-            $criteria->condition='user_id=:id AND status=0 OR status=2';
-            $criteria->params=array(':id'=>$id);
-        }
-        else
-        {
-            $criteria->condition='user_id=:id AND status=2';
-            $criteria->params=array(':id'=>$id);
-        }
-
+        $criteria->condition='user_id='.$id.' AND status=0 OR status=2';
 
         return new CActiveDataProvider('CmsPage',array('criteria'=>$criteria,'pagination'=>array('pageSize'=>5),));
     }
